@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello</title>
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-database.js"></script> -->
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        main {
+            text-align: center;
+            background-color:#505392;
+            width: 100vw;
+            margin: 0 auto;
+            height: 100vh;
+        }
+        h1 {
+            padding-top:50px;
+            color: rgb(201, 201, 201);
+        }
+        form {
+            margin-top: 50px;
+            color: white;
+        }
+        .form-group {
+            margin: auto;
+            width: 500px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom:50px;
+            font-size:16px;
+            text-align: center;
+        }
+        input {
+            width: 50%;
+            padding: 8px 0;
+        }
+        textarea {
+            width: 50%;
+        }
+        button {
+            padding: 10px;
+            background-color:yellow;
+            border: none;
+            border-radius: 4px;
+            color: rgb(36, 25, 25);
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+
+    <main>
+        <h1>Gửi thông điệp cho tôi tại đây</h1>
+        <form action="" id="guidi">
+            <div class="form-group">
+                <label for="sender">Tên của bạn (maybe tên ẩn danh):</label>
+                <input type="text" name="sender" id="sender" >
+            </div>
+            <div class="form-group">
+                <label for="content">Nội dung:</label>
+                <textarea name="sender" id="content" cols="30" rows="5">
+
+                </textarea>
+            </div>
+            <button type="submit" id="send">Gửi đến tôi</button>
+        </form>
+    </main>
+
+
+
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
+  import { getDatabase,ref,push } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+        apiKey: "AIzaSyBpCD09aZpc7Z2QmyMwi20j1vgMKuROo28",
+        authDomain: "get-info-9adec.firebaseapp.com",
+        databaseURL: "https://get-info-9adec-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "get-info-9adec",
+        storageBucket: "get-info-9adec.appspot.com",
+        messagingSenderId: "816156123060",
+        appId: "1:816156123060:web:28930b5c04bce9d04b1ce1",
+        measurementId: "G-TGGEM87LHZ"
+    };
+
+
+//   https://get-info-9adec-default-rtdb.asia-southeast1.firebasedatabase.app
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase(app);
+    const usersRef = ref(db,"information");
+
+
+    document.getElementById("send").addEventListener("click",function(e) {
+        e.preventDefault();
+        let sender = document.getElementById("sender").value;
+        let content = document.getElementById("content").value;
+        if(sender !== "" && content!=="") {
+            push(usersRef, {
+            sender: sender,
+            content: content
+            });
+            alert("Gửi thành công . Xin cảm ơn!");
+            document.getElementById("guidi").submit();
+        }else {
+            alert("Nhập đủ đi đã !!");
+        }
+    })
+
+</script>
+</body>
+</html>
