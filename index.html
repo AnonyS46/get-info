@@ -54,6 +54,14 @@
             font-weight: 600;
             cursor: pointer;
         }
+        @media only screen and (max-width: 600px){
+            .form-group {
+                width: 90%;
+            }
+            label {
+                text-align:left;
+            }
+        }      
     </style>
 </head>
 <body>
@@ -106,7 +114,10 @@
     const analytics = getAnalytics(app);
     const db = getDatabase(app);
     const usersRef = ref(db,"information");
-
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
 
     document.getElementById("send").addEventListener("click",function(e) {
         e.preventDefault();
@@ -115,7 +126,8 @@
         if(sender !== "" && content!=="") {
             push(usersRef, {
             sender: sender,
-            content: content
+            content: content,
+            time: dateTime
             });
             alert("Gửi thành công . Xin cảm ơn!");
             document.getElementById("guidi").submit();
